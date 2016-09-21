@@ -23,11 +23,10 @@ var apps = {
 	docs: express()
 };
 	for (var key in apps) {
-		apps[key].use(express.static(__dirname + '/subdomains/' + key));
-		app.use(vhost(key, apps[key]));
+		apps[key].use(express.static(__dirname + '/subdomain/' + key));
 		app.use(`/subdomain/${key}`, apps[key]); // для тестирования субдомена на сервере разработки
 	}
-    
+
   // - - - - - - - - - - - - - - - - - - - - -
 	// запуск http-сервера // 
 	// - - - - - - - - - - - - - - - - - - - - -

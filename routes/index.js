@@ -17,14 +17,14 @@ router.get('/blog', function(req, res, next) {
   res.render('blog');
 });
 
-/* GET team page. */
-router.get('/team', function(req, res, next) {
-  res.render('team');
-});
-
 /* GET contacts page. */
 router.get('/contacts', function(req, res, next) {
   res.render('contacts');
+});
+
+/* GET team page. */
+router.get('/team', function(req, res, next) {
+  res.render('team');
 });
 
 /* GET 404 page. */
@@ -42,6 +42,16 @@ router.get('/profile', function(req, res, next) {
   res.render('profile');
 });
 
+/* GET pricing page. */
+router.get('/pricing', function(req, res, next) {
+  res.render('pricing');
+});
+
+
+/* GET register page. */
+router.get('/register', function(req, res, next) {
+  res.render('register');
+});
 
 /* GET create page. */
 router.get('/create', function(req, res, next) {
