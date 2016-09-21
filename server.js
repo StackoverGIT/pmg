@@ -3,10 +3,9 @@
 
 var http = require('http');
 var express = require('express');
-
 var path = require('path');
-//var errorhandler = require('errorhandler');
-//var log = require('winston');
+var vhost = require('vhost')
+  	require('express-resource');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var config = require('nconf');
@@ -18,6 +17,16 @@ var users = require('./routes/users');
 
 var app = express();
     app.set('port', config.get('port'));
+    
+// Подключение нескольких тестовых статичных сайтов или поддоменов.
+var apps = {
+	docs: express()
+};
+	for (var key in apps) {
+		apps[key].use(express.static(__dirname + '/subdomains/' + key));
+		app.use(vhost(key, apps[key]));
+		app.use(`/subdomain/${key}`, apps[key]); // для тестирования субдомена на сервере разработки
+	}
     
   // - - - - - - - - - - - - - - - - - - - - -
 	// запуск http-сервера // 
@@ -48,17 +57,10 @@ app.use(cookieParser());
 
 
 //блок подключения статики v. 0.0.1
-app.use(function(req, res, next){
-  if (req.url == '/') {
-  res.render("index");
-} else {
-  next();
-}
-});
 
 app.use(function(req, res, next){
   if (req.url == '/forbidden') {
-  next (new Error("wops, denied"));
+  next (new Error("404"));
 } else {
   next();
 }
@@ -74,10 +76,7 @@ if (process.env.NODE_ENV === 'development') {
   app.use(errorhandler());
 }
 
-
 module.exports = app;
-
-
 
 
 
