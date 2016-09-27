@@ -6,7 +6,6 @@ router.get('/', function(req, res, next) {
   res.render('index');
 });
 
-
 /* GET anounces page. */
 router.get('/anounces', function(req, res, next) {
   res.render('anounces');
@@ -25,11 +24,6 @@ router.get('/contacts', function(req, res, next) {
 /* GET team page. */
 router.get('/team', function(req, res, next) {
   res.render('team');
-});
-
-/* GET 404 page. */
-router.get('/forbidden', function(req, res, next) {
-  res.render('404');
 });
 
 /* GET eventdetails page. */

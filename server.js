@@ -43,7 +43,6 @@ app.disable('x-powered-by');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
@@ -57,18 +56,23 @@ app.use(cookieParser());
 
 //блок подключения статики v. 0.0.1
 
-app.use(function(req, res, next){
+app.use(function(err, req, res, next){
   if (req.url == '/forbidden') {
-  next (new Error("404"));
+  next (new Error("403"));
 } else {
   next();
 }
 });
 
-app.use(function(req, res) {
-  res.status(404).send("Page not found");
+app.use(function(err, req, res, next) {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
 });
 
+//этот кусок кода отвечает за вывод статуса 404
+app.use(function(req, res) {
+  res.status(404).render('404');
+});
 
 if (process.env.NODE_ENV === 'development') {
   // only use in development 
@@ -76,8 +80,6 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 module.exports = app;
-
-
 
 /*
 var express = require('express');
